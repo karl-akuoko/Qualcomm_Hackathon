@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Dict, List
-from .bus import BusFleet
-from .riders import RiderQueue
+from bus import BusFleet
+from riders import RiderQueue
 
 class RewardCalculator:
     """Calculate reward for RL policy based on system performance"""

@@ -217,8 +217,14 @@ async def root():
                 }
                 
                 // Update maps
-                updateMap('static-map', systemState.buses ? systemState.buses.filter(b => b.mode === 'static') : []);
-                updateMap('rl-map', systemState.buses ? systemState.buses.filter(b => b.mode === 'rl') : []);
+                const allBuses = systemState.buses || [];
+                updateMap('static-map', allBuses.filter(b => b.mode === 'static'));
+                // Show same buses in RL panel when in static mode, or RL buses when in RL mode
+                if (systemState.mode === 'static') {
+                    updateMap('rl-map', allBuses.filter(b => b.mode === 'static'));
+                } else {
+                    updateMap('rl-map', allBuses.filter(b => b.mode === 'rl'));
+                }
             }
             
             function updateMap(containerId, buses) {
@@ -312,18 +318,19 @@ async def startup_event():
         seed=42
     )
     
-    # Try to load ONNX policy
-    onnx_path = "../rl/ppo_bus_policy.onnx"
-    if os.path.exists(onnx_path):
+    # Try to load PPO model directly
+    ppo_path = "../rl/ppo_bus_final.zip"
+    if os.path.exists(ppo_path):
         try:
-            onnx_policy = ONNXPolicyInference(onnx_path)
+            from stable_baselines3 import PPO
+            onnx_policy = PPO.load(ppo_path)
             print("✓ ONNX policy loaded successfully")
         except Exception as e:
             print(f"✗ Failed to load ONNX policy: {e}")
             print("RL mode will not be available")
     else:
-        print(f"ONNX policy not found at {onnx_path}")
-        print("Run export_onnx.py first to enable RL mode")
+        print(f"PPO policy not found at {ppo_path}")
+        print("Run train.py first to enable RL mode")
     
     # Reset environment
     simulation_env.reset()
@@ -405,7 +412,7 @@ async def set_mode(request: ModeRequest):
         return {"error": "Mode must be 'static' or 'rl'"}
     
     if request.mode == "rl" and onnx_policy is None:
-        return {"error": "RL mode not available - ONNX policy not loaded"}
+        return {"error": "RL mode not available - PPO policy not loaded"}
     
     current_mode = request.mode
     

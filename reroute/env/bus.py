@@ -2,7 +2,7 @@ import numpy as np
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass, field
 from enum import Enum
-from .riders import Rider
+from riders import Rider
 
 class BusMode(Enum):
     STATIC = "static"

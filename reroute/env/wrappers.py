@@ -2,10 +2,10 @@ import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
 from typing import Dict, List, Tuple, Any
-from .city import ManhattanGrid
-from .riders import RiderGenerator, RiderQueue
-from .bus import BusFleet, BusMode, BusAction
-from .reward import RewardCalculator
+from city import ManhattanGrid
+from riders import RiderGenerator, RiderQueue
+from bus import BusFleet, BusMode, BusAction
+from reward import RewardCalculator
 
 class BusDispatchEnv(gym.Env):
     """Gym environment for bus dispatching RL"""
@@ -56,7 +56,7 @@ class BusDispatchEnv(gym.Env):
         self.baseline_queue = RiderQueue()
         self.baseline_stats_history = []
         
-    def reset(self, seed: int = None) -> np.ndarray:
+    def reset(self, seed: int = None) -> Tuple[np.ndarray, Dict]:
         """Reset environment to initial state"""
         if seed is not None:
             self.seed = seed
@@ -83,9 +83,11 @@ class BusDispatchEnv(gym.Env):
         self.rider_generator.clear_surges()
         self._reset_all_edges()
         
-        return self._get_observation()
+        observation = self._get_observation()
+        info = {}
+        return observation, info
     
-    def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, Dict]:
+    def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, bool, Dict]:
         """Execute one step in the environment"""
         
         # Apply RL actions
@@ -118,12 +120,13 @@ class BusDispatchEnv(gym.Env):
         self.episode_step += 1
         
         # Check if episode is done
-        done = self.current_time >= self.max_episode_time
+        terminated = self.current_time >= self.max_episode_time
+        truncated = False  # We don't use truncation in this environment
         
         # Collect info
         info = self._get_info()
         
-        return self._get_observation(), reward, done, info
+        return self._get_observation(), reward, terminated, truncated, info
     
     def _get_observation(self) -> np.ndarray:
         """Get current observation"""

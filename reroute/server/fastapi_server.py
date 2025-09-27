@@ -299,12 +299,9 @@ async def root():
     return dashboard_html
 
 @app.on_event("startup")
-                    React.createElement('h3', { className: "text-lg font-semibold mb-3 text-center" }, title),
-                    React.createElement('div', { 
-                        className: "relative bg-gray-50 border rounded",
-                        style: { width: 320, height: 320, margin: '0 auto' }
-                    },
-                        React.createElement('svg', { width: 320, height: 320, viewBox: "0 0 320 320" },
+async def startup_event():
+    """Initialize simulation environment and policy"""
+    global simulation_env, onnx_policy
                             // Grid lines
                             Array.from({ length: gridSize + 1 }, (_, i) => 
                                 React.createElement('g', { key: i },
