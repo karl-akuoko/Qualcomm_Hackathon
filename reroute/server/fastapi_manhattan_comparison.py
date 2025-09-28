@@ -474,30 +474,35 @@ class ComparisonManhattanSystem:
         bus.target_street = next_stop.street
     
     def _move_towards_target(self, bus: Bus):
-        """Move towards target (strict street movement only)"""
-        # Move one step at a time along streets only
-        if bus.avenue != bus.target_avenue:
-            # Move along avenue (east/west)
-            if bus.avenue < bus.target_avenue:
-                bus.avenue += 1
-                bus.direction = "east"
+        """Move towards target (strict street movement only) with disruption impact"""
+        # Check for disruptions at current location
+        disruption_impact = self.get_disruption_impact(bus.avenue, bus.street)
+        
+        # Only move if not completely blocked
+        if disruption_impact > 0:
+            # Move one step at a time along streets only
+            if bus.avenue != bus.target_avenue:
+                # Move along avenue (east/west)
+                if bus.avenue < bus.target_avenue:
+                    bus.avenue += 1
+                    bus.direction = "east"
+                else:
+                    bus.avenue -= 1
+                    bus.direction = "west"
+            elif bus.street != bus.target_street:
+                # Move along street (north/south)
+                if bus.street < bus.target_street:
+                    bus.street += 1
+                    bus.direction = "north"
+                else:
+                    bus.street -= 1
+                    bus.direction = "south"
             else:
-                bus.avenue -= 1
-                bus.direction = "west"
-        elif bus.street != bus.target_street:
-            # Move along street (north/south)
-            if bus.street < bus.target_street:
-                bus.street += 1
-                bus.direction = "north"
-            else:
-                bus.street -= 1
-                bus.direction = "south"
-        else:
-            # Reached target, find next stop
-            self._move_to_next_stop(bus)
+                # Reached target, find next stop
+                self._move_to_next_stop(bus)
         
         # Add continuous movement for visibility (aligned with Manhattan streets)
-        if random.random() < 0.4:  # 40% chance to move in a street-aligned direction
+        if random.random() < 0.4 * disruption_impact:  # Reduced chance if disrupted
             # Manhattan streets run roughly north-south, avenues east-west
             # But with a slight tilt to match actual street grid
             if random.random() < 0.6:  # 60% chance to move along avenues (east-west)
