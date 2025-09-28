@@ -1,0 +1,558 @@
+{
+  "stops": {
+    "M1_001": {
+      "stop_id": "M1_001",
+      "stop_name": "Central Park S & 5 Av",
+      "lat": 40.7673,
+      "lon": -73.9712,
+      "x": 52,
+      "y": 56,
+      "routes": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M1_002": {
+      "stop_id": "M1_002",
+      "stop_name": "5 Av & 42 St",
+      "lat": 40.75,
+      "lon": -73.98,
+      "x": 46,
+      "y": 41,
+      "routes": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M1_003": {
+      "stop_id": "M1_003",
+      "stop_name": "5 Av & 34 St",
+      "lat": 40.75,
+      "lon": -73.985,
+      "x": 43,
+      "y": 41,
+      "routes": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M1_004": {
+      "stop_id": "M1_004",
+      "stop_name": "5 Av & 23 St",
+      "lat": 40.74,
+      "lon": -73.99,
+      "x": 40,
+      "y": 33,
+      "routes": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M1_005": {
+      "stop_id": "M1_005",
+      "stop_name": "5 Av & 14 St",
+      "lat": 40.73,
+      "lon": -73.995,
+      "x": 36,
+      "y": 24,
+      "routes": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M5_001": {
+      "stop_id": "M5_001",
+      "stop_name": "Broadway & 72 St",
+      "lat": 40.78,
+      "lon": -73.98,
+      "x": 46,
+      "y": 66,
+      "routes": [
+        "M5",
+        "M7",
+        "M104"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M5_002": {
+      "stop_id": "M5_002",
+      "stop_name": "Broadway & 57 St",
+      "lat": 40.77,
+      "lon": -73.98,
+      "x": 46,
+      "y": 58,
+      "routes": [
+        "M5",
+        "M7",
+        "M104"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M5_003": {
+      "stop_id": "M5_003",
+      "stop_name": "Broadway & 42 St",
+      "lat": 40.75,
+      "lon": -73.985,
+      "x": 43,
+      "y": 41,
+      "routes": [
+        "M5",
+        "M7",
+        "M104"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M5_004": {
+      "stop_id": "M5_004",
+      "stop_name": "Broadway & 34 St",
+      "lat": 40.75,
+      "lon": -73.99,
+      "x": 40,
+      "y": 41,
+      "routes": [
+        "M5",
+        "M7",
+        "M104"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M5_005": {
+      "stop_id": "M5_005",
+      "stop_name": "Broadway & 23 St",
+      "lat": 40.74,
+      "lon": -73.995,
+      "x": 36,
+      "y": 33,
+      "routes": [
+        "M5",
+        "M7",
+        "M104"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M14_001": {
+      "stop_id": "M14_001",
+      "stop_name": "14 St & 1 Av",
+      "lat": 40.73,
+      "lon": -73.98,
+      "x": 46,
+      "y": 24,
+      "routes": [
+        "M14A",
+        "M14D"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M14_002": {
+      "stop_id": "M14_002",
+      "stop_name": "14 St & 2 Av",
+      "lat": 40.73,
+      "lon": -73.985,
+      "x": 43,
+      "y": 24,
+      "routes": [
+        "M14A",
+        "M14D"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M14_003": {
+      "stop_id": "M14_003",
+      "stop_name": "14 St & 3 Av",
+      "lat": 40.73,
+      "lon": -73.99,
+      "x": 40,
+      "y": 24,
+      "routes": [
+        "M14A",
+        "M14D"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M14_004": {
+      "stop_id": "M14_004",
+      "stop_name": "14 St & 6 Av",
+      "lat": 40.73,
+      "lon": -73.995,
+      "x": 36,
+      "y": 24,
+      "routes": [
+        "M14A",
+        "M14D"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M14_005": {
+      "stop_id": "M14_005",
+      "stop_name": "14 St & 8 Av",
+      "lat": 40.73,
+      "lon": -74.0,
+      "x": 33,
+      "y": 24,
+      "routes": [
+        "M14A",
+        "M14D"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M15_001": {
+      "stop_id": "M15_001",
+      "stop_name": "1 Av & 96 St",
+      "lat": 40.78,
+      "lon": -73.95,
+      "x": 66,
+      "y": 66,
+      "routes": [
+        "M15",
+        "M15SBS"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M15_002": {
+      "stop_id": "M15_002",
+      "stop_name": "1 Av & 86 St",
+      "lat": 40.77,
+      "lon": -73.95,
+      "x": 66,
+      "y": 58,
+      "routes": [
+        "M15",
+        "M15SBS"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M15_003": {
+      "stop_id": "M15_003",
+      "stop_name": "1 Av & 72 St",
+      "lat": 40.76,
+      "lon": -73.95,
+      "x": 66,
+      "y": 49,
+      "routes": [
+        "M15",
+        "M15SBS"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M15_004": {
+      "stop_id": "M15_004",
+      "stop_name": "1 Av & 57 St",
+      "lat": 40.75,
+      "lon": -73.95,
+      "x": 66,
+      "y": 41,
+      "routes": [
+        "M15",
+        "M15SBS"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M15_005": {
+      "stop_id": "M15_005",
+      "stop_name": "1 Av & 42 St",
+      "lat": 40.74,
+      "lon": -73.95,
+      "x": 66,
+      "y": 33,
+      "routes": [
+        "M15",
+        "M15SBS"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M11_001": {
+      "stop_id": "M11_001",
+      "stop_name": "Amsterdam Av & 96 St",
+      "lat": 40.78,
+      "lon": -73.97,
+      "x": 53,
+      "y": 66,
+      "routes": [
+        "M11"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M11_002": {
+      "stop_id": "M11_002",
+      "stop_name": "Amsterdam Av & 86 St",
+      "lat": 40.77,
+      "lon": -73.97,
+      "x": 53,
+      "y": 58,
+      "routes": [
+        "M11"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M11_003": {
+      "stop_id": "M11_003",
+      "stop_name": "Amsterdam Av & 72 St",
+      "lat": 40.76,
+      "lon": -73.97,
+      "x": 53,
+      "y": 49,
+      "routes": [
+        "M11"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M11_004": {
+      "stop_id": "M11_004",
+      "stop_name": "Amsterdam Av & 57 St",
+      "lat": 40.75,
+      "lon": -73.97,
+      "x": 53,
+      "y": 41,
+      "routes": [
+        "M11"
+      ],
+      "wheelchair_boarding": true
+    },
+    "M11_005": {
+      "stop_id": "M11_005",
+      "stop_name": "Amsterdam Av & 42 St",
+      "lat": 40.74,
+      "lon": -73.97,
+      "x": 53,
+      "y": 33,
+      "routes": [
+        "M11"
+      ],
+      "wheelchair_boarding": true
+    },
+    "TRANS_001": {
+      "stop_id": "TRANS_001",
+      "stop_name": "Times Sq-42 St",
+      "lat": 40.75,
+      "lon": -73.985,
+      "x": 43,
+      "y": 41,
+      "routes": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M7",
+        "M104"
+      ],
+      "wheelchair_boarding": true
+    },
+    "TRANS_002": {
+      "stop_id": "TRANS_002",
+      "stop_name": "Union Sq-14 St",
+      "lat": 40.73,
+      "lon": -73.99,
+      "x": 40,
+      "y": 24,
+      "routes": [
+        "M14A",
+        "M14D",
+        "M5",
+        "M7",
+        "M104"
+      ],
+      "wheelchair_boarding": true
+    },
+    "TRANS_003": {
+      "stop_id": "TRANS_003",
+      "stop_name": "Central Park-72 St",
+      "lat": 40.77,
+      "lon": -73.97,
+      "x": 53,
+      "y": 58,
+      "routes": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M7"
+      ],
+      "wheelchair_boarding": true
+    }
+  },
+  "routes": {
+    "M1": {
+      "route_id": "M1",
+      "route_name": "M1 Madison Av",
+      "stops": [
+        "M1_001",
+        "M1_002",
+        "M1_003",
+        "M1_004",
+        "M1_005"
+      ],
+      "direction": "SB",
+      "color": "#3b82f6"
+    },
+    "M2": {
+      "route_id": "M2",
+      "route_name": "M2 Madison Av",
+      "stops": [
+        "M1_001",
+        "M1_002",
+        "M1_003",
+        "M1_004",
+        "M1_005"
+      ],
+      "direction": "SB",
+      "color": "#10b981"
+    },
+    "M3": {
+      "route_id": "M3",
+      "route_name": "M3 Madison Av",
+      "stops": [
+        "M1_001",
+        "M1_002",
+        "M1_003",
+        "M1_004",
+        "M1_005"
+      ],
+      "direction": "SB",
+      "color": "#f59e0b"
+    },
+    "M4": {
+      "route_id": "M4",
+      "route_name": "M4 Madison Av",
+      "stops": [
+        "M1_001",
+        "M1_002",
+        "M1_003",
+        "M1_004",
+        "M1_005"
+      ],
+      "direction": "SB",
+      "color": "#ef4444"
+    },
+    "M5": {
+      "route_id": "M5",
+      "route_name": "M5 Broadway",
+      "stops": [
+        "M5_001",
+        "M5_002",
+        "M5_003",
+        "M5_004",
+        "M5_005"
+      ],
+      "direction": "SB",
+      "color": "#8b5cf6"
+    },
+    "M7": {
+      "route_id": "M7",
+      "route_name": "M7 Broadway",
+      "stops": [
+        "M5_001",
+        "M5_002",
+        "M5_003",
+        "M5_004",
+        "M5_005"
+      ],
+      "direction": "SB",
+      "color": "#06b6d4"
+    },
+    "M104": {
+      "route_id": "M104",
+      "route_name": "M104 Broadway",
+      "stops": [
+        "M5_001",
+        "M5_002",
+        "M5_003",
+        "M5_004",
+        "M5_005"
+      ],
+      "direction": "SB",
+      "color": "#84cc16"
+    },
+    "M14A": {
+      "route_id": "M14A",
+      "route_name": "M14A 14 St",
+      "stops": [
+        "M14_001",
+        "M14_002",
+        "M14_003",
+        "M14_004",
+        "M14_005"
+      ],
+      "direction": "EB",
+      "color": "#f97316"
+    },
+    "M14D": {
+      "route_id": "M14D",
+      "route_name": "M14D 14 St",
+      "stops": [
+        "M14_005",
+        "M14_004",
+        "M14_003",
+        "M14_002",
+        "M14_001"
+      ],
+      "direction": "WB",
+      "color": "#ec4899"
+    },
+    "M15": {
+      "route_id": "M15",
+      "route_name": "M15 1 Av",
+      "stops": [
+        "M15_001",
+        "M15_002",
+        "M15_003",
+        "M15_004",
+        "M15_005"
+      ],
+      "direction": "SB",
+      "color": "#6366f1"
+    },
+    "M15SBS": {
+      "route_id": "M15SBS",
+      "route_name": "M15 SBS 1 Av",
+      "stops": [
+        "M15_001",
+        "M15_002",
+        "M15_003",
+        "M15_004",
+        "M15_005"
+      ],
+      "direction": "SB",
+      "color": "#14b8a6"
+    },
+    "M11": {
+      "route_id": "M11",
+      "route_name": "M11 Amsterdam Av",
+      "stops": [
+        "M11_001",
+        "M11_002",
+        "M11_003",
+        "M11_004",
+        "M11_005"
+      ],
+      "direction": "SB",
+      "color": "#a855f7"
+    }
+  },
+  "grid_size": [
+    100,
+    100
+  ],
+  "bounds": {
+    "min_lat": 40.7,
+    "max_lat": 40.82,
+    "min_lon": -74.05,
+    "max_lon": -73.9
+  }
+}

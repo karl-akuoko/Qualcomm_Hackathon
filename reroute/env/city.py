@@ -30,6 +30,7 @@ class Stop:
     y: int
     queue_len: int = 0
     eta_list: List[float] = None
+    total_wait_time: float = 0.0  # Total wait time for passengers at this stop
     
     def __post_init__(self):
         if self.eta_list is None:

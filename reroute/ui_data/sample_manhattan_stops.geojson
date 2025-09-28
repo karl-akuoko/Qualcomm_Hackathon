@@ -1,0 +1,82 @@
+{
+  "type": "FeatureCollection",
+  "name": "demo_manhattan_stops",
+  "generated_at": "2025-09-28T06:08:42.541005+00:00",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.952222,
+          40.784722
+        ]
+      },
+      "properties": {
+        "stop_id": "DEMO_001",
+        "stop_name": "Lexington Av / E 91 St",
+        "routes_served_csv": "M101|M102|M103"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.978667,
+          40.752726
+        ]
+      },
+      "properties": {
+        "stop_id": "DEMO_002",
+        "stop_name": "5 Av / W 42 St",
+        "routes_served_csv": "M1|M2|M3|M4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.990173,
+          40.733572
+        ]
+      },
+      "properties": {
+        "stop_id": "DEMO_003",
+        "stop_name": "6 Av / W 12 St",
+        "routes_served_csv": "M7|M55"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9876,
+          40.7561
+        ]
+      },
+      "properties": {
+        "stop_id": "DEMO_004",
+        "stop_name": "2 Av / E 47 St",
+        "routes_served_csv": "M15|M15-SBS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9723,
+          40.7831
+        ]
+      },
+      "properties": {
+        "stop_id": "DEMO_005",
+        "stop_name": "Central Park W / W 96 St",
+        "routes_served_csv": "M10|M96"
+      }
+    }
+  ]
+}

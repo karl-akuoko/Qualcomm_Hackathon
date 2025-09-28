@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manhattan Bus Map — Clean UI</title>
+  <link href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    html, body { height:100%; margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    #app { display:flex; height:100%; }
+    #sidebar {
+      width: 320px; background:#f7f4ef; border-right:1px solid #e5ded3; padding:16px; box-sizing:border-box;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    #map { flex:1; }
+    h1 { margin:0 0 6px; font-size:20px; letter-spacing:.3px; }
+    .muted { color:#6b6257; font-size:13px; }
+    .panel { background:#fff; border:1px solid #e5ded3; border-radius:10px; padding:12px; }
+    label { font-size:13px; color:#5a5248; }
+    input[type="text"] { width:100%; padding:8px 10px; border:1px solid #d9d2c6; border-radius:8px; }
+    button { padding:8px 10px; border:1px solid #d9d2c6; background:#fff; border-radius:8px; cursor:pointer; }
+    button.primary { background:#0ea5e9; border-color:#0ea5e9; color:#fff; }
+    .footer { margin-top:auto; font-size:12px; color:#8b8175; }
+    .chip { display:inline-block; padding:2px 8px; border-radius:999px; background:#e8f4fb; color:#0b75a1; font-size:12px; margin:2px 4px 0 0; }
+    .legend { position:absolute; top:12px; left:12px; background:#fff; padding:8px 10px; border-radius:8px; border:1px solid #e5ded3; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div id="sidebar">
+    <div>
+      <h1>Manhattan Bus Map</h1>
+      <div class="muted">Clean, app-friendly view. Load your full stops GeoJSON below.</div>
+    </div>
+
+    <div class="panel">
+      <label>Load stops from URL</label>
+      <input id="urlInput" type="text" placeholder="https://example.com/manhattan_bus_stops.geojson" />
+      <div style="margin-top:8px; display:flex; gap:8px;">
+        <button id="loadUrl" class="primary">Load</button>
+        <button id="loadDemo">Load demo</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <label>Or open a local GeoJSON file</label>
+      <input id="fileInput" type="file" accept=".geojson,application/geo+json,application/json" />
+    </div>
+
+    <div class="panel">
+      <label>Filter by route</label>
+      <input id="routeFilter" type="text" placeholder="e.g. M15 or M15|M101" />
+      <div class="muted">Use | to include multiple. Leave empty to show all.</div>
+    </div>
+
+    <div class="panel">
+      <div><span class="chip">Clustering on zoomed out</span> <span class="chip">Labels at z≥14</span></div>
+      <div style="margin-top:8px; display:flex; gap:8px;">
+        <button id="fitManhattan">Fit to Manhattan</button>
+        <button id="resetFilter">Reset filters</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Basemap © CARTO / OSM · Built with MapLibre GL
+    </div>
+  </div>
+  <div id="map"></div>
+</div>
+
+<div class="legend">Stops • click for name & routes</div>
+
+<script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+<script>
+  const map = new maplibregl.Map({
+    container: 'map',
+    style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+    center: [-73.9712, 40.7831],
+    zoom: 11.5
+  });
+  map.addControl(new maplibregl.NavigationControl(), 'top-right');
+  const bounds = [[-74.03, 40.68], [-73.90, 40.88]];
+
+  function ensureStopsLayers() {
+    if (!map.getSource('stops')) {
+      map.addSource('stops', {
+        type: 'geojson',
+        data: {"type":"FeatureCollection","features":[]},
+        cluster: true,
+        clusterMaxZoom: 13,
+        clusterRadius: 40
+      });
+      map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'stops',
+        filter: ['has', 'point_count'],
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['get', 'point_count'], 10, 12, 200, 28],
+          'circle-color': '#0ea5e9',
+          'circle-opacity': 0.9
+        }
+      });
+      map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'stops',
+        filter: ['has', 'point_count'],
+        layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-size': 12 },
+        paint: { 'text-color': '#fff' }
+      });
+      map.addLayer({
+        id: 'stops-circle',
+        type: 'circle',
+        source: 'stops',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 2.5, 15, 5.5],
+          'circle-color': '#1e3a8a',
+          'circle-stroke-color': '#ffffff',
+          'circle-stroke-width': 1
+        }
+      });
+      map.addLayer({
+        id: 'stops-label',
+        type: 'symbol',
+        source: 'stops',
+        minzoom: 14,
+        filter: ['!', ['has', 'point_count']],
+        layout: {
+          'text-field': ['get', 'stop_name'],
+          'text-size': 11,
+          'text-offset': [0, 1.0]
+        },
+        paint: { 'text-color': '#2b2b2b', 'text-halo-color': '#ffffff', 'text-halo-width': 1 }
+      });
+
+      map.on('click', 'stops-circle', (e) => showPopup(e));
+      map.on('click', 'stops-label', (e) => showPopup(e));
+      map.on('mouseenter', 'stops-circle', () => map.getCanvas().style.cursor = 'pointer');
+      map.on('mouseleave', 'stops-circle', () => map.getCanvas().style.cursor = '');
+    }
+  }
+
+  function showPopup(e) {
+    const f = e.features[0];
+    const p = f.properties;
+    const routes = (p.routes_served_csv || '').split('|').filter(Boolean).join(', ');
+    new maplibregl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(`<strong>${p.stop_name || 'Stop'}</strong><br/>Routes: ${routes || '—'}<br/><small>ID: ${p.stop_id || ''}</small>`)
+      .addTo(map);
+  }
+
+  function setStopsData(geojson) {
+    ensureStopsLayers();
+    const src = map.getSource('stops');
+    if (src) src.setData(geojson);
+  }
+
+  function applyRouteFilter(routesExpr) {
+    if (!routesExpr) {
+      map.setFilter('stops-circle', ['!', ['has', 'point_count']]);
+      map.setFilter('stops-label',  ['all', ['!', ['has', 'point_count']], ['>=', ['zoom'], 14]]);
+      return;
+    }
+    const tokens = routesExpr.split('|').map(s => s.trim()).filter(Boolean);
+    const orClauses = tokens.map(t => ['in', t, ['split', ['get','routes_served_csv'], '|']]);
+    const filter = ['all', ['!', ['has','point_count']], ['any'].concat(orClauses)];
+    map.setFilter('stops-circle', filter);
+    map.setFilter('stops-label', ['all', filter, ['>=', ['zoom'], 14]]);
+  }
+
+  document.getElementById('loadUrl').addEventListener('click', async () => {
+    const url = document.getElementById('urlInput').value.trim();
+    if (!url) return;
+    const res = await fetch(url);
+    const gj = await res.json();
+    setStopsData(gj);
+    map.fitBounds(bounds, {padding: 30, duration: 500});
+  });
+
+  document.getElementById('loadDemo').addEventListener('click', async () => {
+    const res = await fetch('sample_manhattan_stops.geojson');
+    const gj = await res.json();
+    setStopsData(gj);
+    map.fitBounds(bounds, {padding: 30, duration: 500});
+  });
+
+  document.getElementById('fileInput').addEventListener('change', (ev) => {
+    const file = ev.target.files?.[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const gj = JSON.parse(reader.result);
+      setStopsData(gj);
+      map.fitBounds(bounds, {padding: 30, duration: 500});
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('routeFilter').addEventListener('input', (ev) => {
+    applyRouteFilter(ev.target.value);
+  });
+  document.getElementById('resetFilter').addEventListener('click', () => {
+    document.getElementById('routeFilter').value = '';
+    applyRouteFilter('');
+  });
+  document.getElementById('fitManhattan').addEventListener('click', () => {
+    map.fitBounds(bounds, {padding: 30, duration: 500});
+  });
+
+  map.on('load', () => {});
+</script>
+</body>
+</html>

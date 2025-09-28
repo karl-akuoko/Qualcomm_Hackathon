@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manhattan Buses — Stops Overlay</title>
+  <link href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    html, body, #map { height: 100%; margin: 0; }
+    .legend { position:absolute; top:12px; left:12px; background:#fff; padding:10px 12px; border-radius:8px; font:14px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; box-shadow:0 2px 10px rgba(0,0,0,.08); }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="legend">
+    <div><strong>Manhattan Bus Stops</strong></div>
+    <div style="opacity:.7">Drop your GeoJSON in <code>DATA_URL</code>.</div>
+  </div>
+  <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
+  <script>
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // streets basemap
+      center: [-73.9712, 40.7831], // Manhattan
+      zoom: 11.5
+    });
+    map.addControl(new maplibregl.NavigationControl(), 'top-right');
+
+    const DATA_URL = 'manhattan_bus_stops.geojson'; // replace with your generated file URL/path
+
+    map.on('load', () => {
+      map.addSource('stops', {
+        type: 'geojson',
+        data: DATA_URL,
+        promoteId: 'stop_id'
+      });
+      map.addLayer({
+        id: 'stops-circle',
+        type: 'circle',
+        source: 'stops',
+        paint: {
+          'circle-radius': [
+            'interpolate', ['linear'], ['zoom'],
+            10, 2,
+            14, 5
+          ],
+          'circle-opacity': 0.9,
+          'circle-stroke-width': 0.5,
+          'circle-stroke-color': '#111'
+        }
+      });
+      map.addLayer({
+        id: 'stops-label',
+        type: 'symbol',
+        source: 'stops',
+        minzoom: 14,
+        layout: {
+          'text-field': ['get', 'stop_name'],
+          'text-font': ['Open Sans Regular'],
+          'text-size': 11,
+          'text-offset': [0, 1.2]
+        },
+        paint: { 'text-halo-color': '#fff', 'text-halo-width': 1 }
+      });
+      map.on('click', 'stops-circle', e => {
+        const f = e.features[0];
+        const routes = (f.properties.routes_served_csv || '').split('|').filter(Boolean).join(', ');
+        new maplibregl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(`<strong>${f.properties.stop_name}</strong><br/>Routes: ${routes}<br/><small>ID: ${f.properties.stop_id}</small>`)
+          .addTo(map);
+      });
+      map.on('mouseenter', 'stops-circle', () => map.getCanvas().style.cursor = 'pointer');
+      map.on('mouseleave', 'stops-circle', () => map.getCanvas().style.cursor = '');
+    });
+  </script>
+</body>
+</html>

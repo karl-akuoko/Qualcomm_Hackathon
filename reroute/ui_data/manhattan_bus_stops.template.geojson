@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "name": "manhattan_bus_stops",
+  "generated_at": "2025-09-28T05:20:10.368339+00:00",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG:4326"
+    }
+  },
+  "schema": {
+    "properties": {
+      "stop_id": "string",
+      "stop_code": "string|null",
+      "stop_name": "string",
+      "routes_served": "array[string]",
+      "direction_tags": "array[string] (e.g., NB/SB/EB/WB)",
+      "wheelchair_boarding": "int|null (0/1/2 per GTFS)",
+      "zone_id": "string|null",
+      "agencies": "array[string]"
+    },
+    "geometry": "Point (lon, lat)"
+  },
+  "features": []
+}
