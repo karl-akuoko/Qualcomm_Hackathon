@@ -1,4 +1,21 @@
-# Bus Dispatch RL MVP
+# Manhattan Bus Dispatch System - Web & Android
+
+## 🚀 Quick Start
+
+### 🌐 **Web Version**
+```bash
+cd /Users/ehsan/Downloads/IdeaProjects/Qualcomm/Qualcomm_Hackathon/reroute
+python start_comparison.py
+```
+Then visit: **http://localhost:8000**
+
+### 📱 **Android Version**
+1. Open Android Studio
+2. Open project: `/Users/ehsan/Downloads/IdeaProjects/Qualcomm/Qualcomm_Hackathon/reroute/android`
+3. Configure Google Maps API key
+4. Run the app
+
+**See [ANDROID_SETUP.md](ANDROID_SETUP.md) for detailed Android setup instructions.**
 
 A reinforcement learning-driven bus dispatch system that demonstrates adaptive routing capabilities on a Snapdragon X Elite laptop. This MVP proves that RL can reduce rider wait times and overcrowding compared to fixed schedules, even under judge-triggered disruptions.
 
@@ -26,6 +43,32 @@ A reinforcement learning-driven bus dispatch system that demonstrates adaptive r
 - **Real-time Updates**: WebSocket streaming at 5-10 Hz
 - **Stress Testing**: Road closures, traffic jams, demand surges
 - **Baseline Comparison**: Side-by-side static vs RL performance
+
+## 🗽 Cross-Platform Features
+
+### ✅ **Perfect Grid Alignment**
+- **45° map tilt** for roads perfectly parallel/perpendicular to screen
+- **Streets run up/down**, **avenues run left/right** aligned with screen
+- **All 335+ Manhattan bus stops** from GTFS data + UI data files
+
+### ✅ **Road Disruption System**
+- 🚧 **Road Closures** - Complete blockage (0% movement)
+- 🚗💥 **Car Crashes** - Severe slowdown (30% movement)  
+- 🧊 **Icy Roads** - Moderate slowdown (60% movement)
+- 🚦 **Traffic Jams** - Light slowdown (70% movement)
+- 🧹 **Clear All** - Remove all disruptions
+
+### ✅ **Real-time Performance Comparison**
+- **Baseline Routes** (red circles) - Untrained buses
+- **Optimized Routes** (green circles) - Trained buses
+- **Live Metrics** - Wait times, passenger counts, efficiency
+- **Disruption Impact** - See how road conditions affect performance
+
+### ✅ **Cross-Platform Support**
+- **🌐 Web Version** - Browser-based with MapLibre GL JS
+- **📱 Android Version** - Native Android app with Google Maps
+- **🔄 Same Backend** - Both versions use the same Python server
+- **📊 Identical Features** - All functionality available on both platforms
 
 ## 🚀 Quick Start
 
@@ -169,28 +212,67 @@ cd rl && python eval.py --model ppo_bus_final --episodes 10
 
 ```
 reroute/
-├── env/                 # Simulation environment
-│   ├── city.py         # Manhattan grid and stops
-│   ├── bus.py          # Bus fleet management
-│   ├── riders.py       # Rider generation
-│   ├── traffic.py      # Traffic modeling
-│   ├── reward.py       # Reward calculation
-│   └── wrappers.py      # Gym environment
-├── rl/                  # Reinforcement learning
-│   ├── train.py        # PPO training
-│   ├── eval.py         # Policy evaluation
-│   ├── export_onnx.py  # ONNX export
-│   └── policies.py     # Custom policies
-├── server/              # Backend API
-│   ├── fastapi_server.py # Main server
-│   ├── state_store.py  # State management
-│   └── adapters.py     # Baseline dispatchers
-├── clients/             # Frontend applications
-│   ├── dashboard/       # React web dashboard
-│   └── mobile/         # React Native app
-├── scripts/            # Demo and utilities
-└── data/               # Dependencies and samples
+├── start_comparison.py              # 🚀 Main startup script
+├── server/
+│   └── fastapi_manhattan_comparison.py  # 🗽 Enhanced server with all features
+├── env/                            # 🏗️ Environment components
+│   ├── city.py                     # Manhattan grid and stops
+│   ├── bus.py                      # Bus fleet management
+│   ├── riders.py                   # Rider generation
+│   ├── traffic.py                  # Traffic modeling
+│   ├── reward.py                   # Reward calculation
+│   └── wrappers.py                 # Gym environment
+├── rl/                             # 🤖 Reinforcement learning
+│   ├── train.py                    # PPO training
+│   ├── eval.py                     # Policy evaluation
+│   ├── export_onnx.py              # ONNX export
+│   └── policies.py                 # Custom policies
+├── ui_data/                        # 📊 UI and data files
+│   ├── gtfs_m/                     # MTA GTFS data
+│   └── sample_manhattan_stops.geojson
+├── clients/                        # 📱 Frontend clients
+│   ├── dashboard/                  # React web dashboard
+│   └── mobile/                     # React Native app
+├── android/                        # 📱 Android app
+│   ├── app/
+│   │   ├── build.gradle            # Android dependencies
+│   │   └── src/main/
+│   │       ├── AndroidManifest.xml # App permissions
+│   │       ├── java/com/qualcomm/reroute/
+│   │       │   ├── MainActivity.kt # Main activity
+│   │       │   ├── data/           # Data models & API
+│   │       │   ├── ui/             # UI screens & components
+│   │       │   └── di/             # Dependency injection
+│   │       └── res/                # Android resources
+│   ├── build.gradle                # Project build config
+│   └── settings.gradle             # Project settings
+├── README_CLEAN.md                 # 📖 Clean documentation
+└── ANDROID_SETUP.md               # 📱 Android setup guide
 ```
+
+### Running Both Versions
+
+#### 🌐 **Web Version**
+```bash
+# Start the Python server
+python start_comparison.py
+
+# Open browser
+open http://localhost:8000
+```
+
+#### 📱 **Android Version**
+```bash
+# 1. Start the Python server (same as web version)
+python start_comparison.py
+
+# 2. Open Android Studio
+# 3. Open project: reroute/android
+# 4. Configure Google Maps API key
+# 5. Run the app
+```
+
+**Both versions connect to the same Python server and provide identical functionality!**
 
 ### Adding New Features
 
@@ -198,6 +280,7 @@ reroute/
 2. **New Metrics**: Extend `env/reward.py` and `server/state_store.py`
 3. **New Policies**: Implement in `rl/policies.py`
 4. **New Scenarios**: Add to `scripts/demo_seed.py`
+5. **Android UI**: Add new components in `android/app/src/main/java/com/qualcomm/reroute/ui/`
 
 ## 🐛 Troubleshooting
 

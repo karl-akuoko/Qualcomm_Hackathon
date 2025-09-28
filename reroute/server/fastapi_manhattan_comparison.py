@@ -668,6 +668,18 @@ async def get_dashboard():
         </div>
       </div>
     </div>
+    
+    <div class="panel">
+      <label>Road Disruptions</label>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+        <button onclick="addRoadClosure()" style="background: #ff6b6b; color: white; border: none; padding: 8px; border-radius: 4px; font-size: 12px;">🚧 Road Closure</button>
+        <button onclick="addCarCrash()" style="background: #ff8c00; color: white; border: none; padding: 8px; border-radius: 4px; font-size: 12px;">🚗💥 Car Crash</button>
+        <button onclick="addIcyRoads()" style="background: #87ceeb; color: white; border: none; padding: 8px; border-radius: 4px; font-size: 12px;">🧊 Icy Roads</button>
+        <button onclick="addTrafficJam()" style="background: #ffa500; color: white; border: none; padding: 8px; border-radius: 4px; font-size: 12px;">🚦 Traffic Jam</button>
+      </div>
+      <button onclick="clearDisruptions()" style="background: #6c757d; color: white; border: none; padding: 8px; border-radius: 4px; font-size: 12px; width: 100%;">🧹 Clear All</button>
+      <div id="disruption-count" style="font-size: 11px; color: #6b6257; margin-top: 8px;">No disruptions</div>
+    </div>
     <div class="panel">
       <label>Route Comparison</label>
       <div class="comparison-grid">
@@ -781,6 +793,65 @@ async def get_dashboard():
     // Update map if available
     if (map) {
       updateMap(data);
+    }
+  }
+  
+  // Disruption functions
+  async function addRoadClosure() {
+    const avenue = Math.floor(Math.random() * 12) + 1;
+    const street = Math.floor(Math.random() * 200) + 1;
+    try {
+      const response = await fetch(`/add_road_closure?avenue=${avenue}&street=${street}`, {method: 'POST'});
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error('Error adding road closure:', error);
+    }
+  }
+  
+  async function addCarCrash() {
+    const avenue = Math.floor(Math.random() * 12) + 1;
+    const street = Math.floor(Math.random() * 200) + 1;
+    try {
+      const response = await fetch(`/add_car_crash?avenue=${avenue}&street=${street}`, {method: 'POST'});
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error('Error adding car crash:', error);
+    }
+  }
+  
+  async function addIcyRoads() {
+    const avenue = Math.floor(Math.random() * 12) + 1;
+    const street = Math.floor(Math.random() * 200) + 1;
+    try {
+      const response = await fetch(`/add_icy_roads?avenue=${avenue}&street=${street}`, {method: 'POST'});
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error('Error adding icy roads:', error);
+    }
+  }
+  
+  async function addTrafficJam() {
+    const avenue = Math.floor(Math.random() * 12) + 1;
+    const street = Math.floor(Math.random() * 200) + 1;
+    try {
+      const response = await fetch(`/add_traffic_jam?avenue=${avenue}&street=${street}`, {method: 'POST'});
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error('Error adding traffic jam:', error);
+    }
+  }
+  
+  async function clearDisruptions() {
+    try {
+      const response = await fetch('/clear_disruptions', {method: 'POST'});
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error('Error clearing disruptions:', error);
     }
   }
 
@@ -979,6 +1050,73 @@ async def get_dashboard():
 </body>
 </html>
     """
+
+@app.get("/status")
+async def get_status():
+    """Get current system status"""
+    try:
+        system_state = manhattan_system.get_system_state()
+        return {
+            "status": "running",
+            "simulation_time": manhattan_system.simulation_time,
+            "buses": len(system_state.get("buses", [])),
+            "stops": len(system_state.get("stops", [])),
+            "passengers": system_state.get("kpis", {}).get("total_passengers", 0),
+            "avg_wait_time": system_state.get("kpis", {}).get("avg_wait_time", 0),
+            "disruptions": {
+                "road_closures": len(manhattan_system.road_closures),
+                "car_crashes": len(manhattan_system.car_crashes),
+                "icy_roads": len(manhattan_system.icy_roads),
+                "traffic_jams": len(manhattan_system.traffic_jams)
+            }
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/add_road_closure")
+async def add_road_closure(avenue: int, street: int):
+    """Add a road closure at specified location"""
+    try:
+        manhattan_system.add_road_closure(avenue, street)
+        return {"success": True, "message": f"Road closure added at Avenue {avenue}, Street {street}"}
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/add_car_crash")
+async def add_car_crash(avenue: int, street: int):
+    """Add a car crash at specified location"""
+    try:
+        manhattan_system.add_car_crash(avenue, street)
+        return {"success": True, "message": f"Car crash added at Avenue {avenue}, Street {street}"}
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/add_icy_roads")
+async def add_icy_roads(avenue: int, street: int):
+    """Add icy roads at specified location"""
+    try:
+        manhattan_system.add_icy_roads(avenue, street)
+        return {"success": True, "message": f"Icy roads added at Avenue {avenue}, Street {street}"}
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/add_traffic_jam")
+async def add_traffic_jam(avenue: int, street: int):
+    """Add traffic jam at specified location"""
+    try:
+        manhattan_system.add_traffic_jam(avenue, street)
+        return {"success": True, "message": f"Traffic jam added at Avenue {avenue}, Street {street}"}
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/clear_disruptions")
+async def clear_disruptions():
+    """Clear all road disruptions"""
+    try:
+        manhattan_system.clear_disruptions()
+        return {"success": True, "message": "All road disruptions cleared"}
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.websocket("/live")
 async def websocket_endpoint(websocket: WebSocket):

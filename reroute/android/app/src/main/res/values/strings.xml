@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Manhattan Bus Dispatch</string>
+    <string name="performance_metrics">Performance Metrics</string>
+    <string name="road_disruptions">Road Disruptions</string>
+    <string name="avg_wait">Avg Wait</string>
+    <string name="passengers">Passengers</string>
+    <string name="buses">Buses</string>
+    <string name="stops">Stops</string>
+    <string name="route_comparison">Route Comparison</string>
+    <string name="baseline">Baseline</string>
+    <string name="optimized">Optimized</string>
+    <string name="improvement">Improvement</string>
+    <string name="road_closure">Road Closure</string>
+    <string name="car_crash">Car Crash</string>
+    <string name="icy_roads">Icy Roads</string>
+    <string name="traffic_jam">Traffic Jam</string>
+    <string name="clear_all">Clear All Disruptions</string>
+    <string name="system_status">System Status</string>
+    <string name="time">Time</string>
+    <string name="loading">Loading...</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_server">Server error. Please try again later.</string>
+</resources>
