@@ -12,10 +12,10 @@ Then visit: **http://localhost:8000**
 ### 📱 **Android Version**
 1. Open Android Studio
 2. Open project: `/Users/ehsan/Downloads/IdeaProjects/Qualcomm/Qualcomm_Hackathon/reroute/android`
-3. Configure Google Maps API key
-4. Run the app
+3. Run the app (no API key required!)
 
-**See [ANDROID_SETUP.md](ANDROID_SETUP.md) for detailed Android setup instructions.**
+**See [ANDROID_SETUP_NO_API_KEY.md](ANDROID_SETUP_NO_API_KEY.md) for easy setup (no API key required)**
+**Or [ANDROID_SETUP.md](ANDROID_SETUP.md) for Google Maps version**
 
 A reinforcement learning-driven bus dispatch system that demonstrates adaptive routing capabilities on a Snapdragon X Elite laptop. This MVP proves that RL can reduce rider wait times and overcrowding compared to fixed schedules, even under judge-triggered disruptions.
 

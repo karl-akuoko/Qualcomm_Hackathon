@@ -75,9 +75,7 @@ dependencies {
     // WebSocket
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     
-    // Maps
-    implementation 'com.google.android.gms:play-services-maps:18.2.0'
-    implementation 'com.google.maps.android:maps-compose:2.15.0'
+    // Simple map view (no Google Maps API key required)
     
     // Hilt for dependency injection
     implementation 'com.google.dagger:hilt-android:2.48'

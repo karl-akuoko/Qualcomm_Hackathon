@@ -6,7 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.qualcomm.reroute.ui.components.BusDispatchMap
+import com.qualcomm.reroute.ui.components.SimpleMapView
 import com.qualcomm.reroute.ui.components.DisruptionControls
 import com.qualcomm.reroute.ui.components.PerformanceMetrics
 import com.qualcomm.reroute.ui.viewmodel.BusDispatchViewModel
@@ -89,7 +89,7 @@ fun MainScreen(
             }
             
             // Map
-            BusDispatchMap(
+            SimpleMapView(
                 systemState = uiState.systemState,
                 modifier = Modifier.fillMaxSize()
             )
